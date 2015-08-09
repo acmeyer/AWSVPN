@@ -4,15 +4,14 @@
 
 # create and start an instance
 #AMI = AMZN Linux 64 Bits
-#EBS backed US-east: ami-1ccae774
 
-AMI_ID=ami-5ccae734 #US-east instance store
+AMI_ID=ami-1ccae774
 KEY_ID=PEM_FILE_NAME
 SEC_ID=SECURITY_GROUP_NAME
 BOOTSTRAP_SCRIPT=vpn-ec2-install.sh
 
 echo "Starting Instance..."
-INSTANCE_DETAILS=`aws ec2 run-instances --image-id $AMI_ID --key-name $KEY_ID --security-groups $SEC_ID --instance-type t1.micro --user-data file://./$BOOTSTRAP_SCRIPT --output text | grep INSTANCES`
+INSTANCE_DETAILS=`aws ec2 run-instances --image-id $AMI_ID --key-name $KEY_ID --security-groups $SEC_ID --instance-type t2.micro --user-data file://./$BOOTSTRAP_SCRIPT --output text | grep INSTANCES`
 
 INSTANCE_ID=`echo $INSTANCE_DETAILS | awk '{print $8}'`
 echo $INSTANCE_ID > $HOME/vpn-ec2.id
